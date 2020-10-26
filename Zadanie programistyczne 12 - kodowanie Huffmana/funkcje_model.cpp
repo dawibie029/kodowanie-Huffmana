@@ -5,8 +5,6 @@
 #include <vector>
 #include "funkcje.h"
 
-
-//	WARTOŒÆI LICZBOWE W WEKTORZE KONWERTOWANE NA TABLICE INTÓW - LEPIEJ ZROBIÆ NA STRINGI A POTEM S£OWA KODOWE POCIACHAÆ TYMI STRINGAMI
 /**
 	* Funkcja odczytuj¹ca zawartoœæ pliku tekstowego i zapisuj¹ca j¹ w zmiennej
 	* Parametry przekazywane przez referencjê
@@ -14,7 +12,7 @@
 	* @param dane - wektor zawieraj¹cy tablicê kodów, oraz s³owa kodowe (na ostatniej pozycji)
 	* @return - zwraca wartoœæ true, je¿eli uda siê otworzyæ plik. W przeciwnym wypadku wartosc false
 */
-bool wczytaj(const std::string& adres, std::vector<std::string>& dane) {
+bool read(const std::string& adres, std::vector<std::string>& dane) {
 	std::ifstream plikwe(adres);
 	if (!plikwe.is_open())
 		return false;
@@ -32,7 +30,7 @@ bool wczytaj(const std::string& adres, std::vector<std::string>& dane) {
 	* @param tekst - wektor zawieraj¹cy dane, które funckja zapisze w pliku wyjœciowym
 	* @return zwraca wartoœæ true, jeœli funkcja zadzia³a prawid³owo lub wartoœæ false w razie niepowodzenia
 */
-bool zapisz(const std::string& adres, const std::vector<std::string>& dane) {
+bool save(const std::string& adres, const std::vector<std::string>& dane) {
 	std::ofstream plikwy(adres);
 	if (!plikwy.is_open())
 		return false;
@@ -48,10 +46,10 @@ bool zapisz(const std::string& adres, const std::vector<std::string>& dane) {
 	* @param wartoœci - tablica wartoœci przypisanych do odpowiadaj¹cych im znaków
 	* @param kod - ci¹g s³ów kodowych
 */
-void konwertuj(const std::vector<std::string>& dane, std::vector<std::string>& znaki, std::vector<std::string>& wartosci, std::string& kod) {
-	for (int i = 0; i < dane.size() - 1; i += 2) {	//	Pêtla przepisuj¹ca wartoœci z wektora dane do dwóch wektorów w sposób wynikaj¹cy ze sposobu
-		znaki[i] = dane[i];							//	zapisu w tym wektorze - na przemian znak i odpowiadaj¹cy mu kod binarny (zawsze liczba parzysta).
-		wartosci[i] = dane[i + 1];					//	Po wykonaniu pêtli zawsze zostaje jeden element - jest nim zakodowane zdanie
+void convert(const std::vector<std::string>& dane, std::vector<std::string>& znaki, std::vector<std::string>& wartosci, std::string& kod) {
+	for (std::size_t i = 0; i < dane.size() - 1; i += 2) {	//	Pêtla przepisuj¹ca wartoœci z wektora dane do dwóch wektorów w sposób wynikaj¹cy ze sposobu
+		znaki[i] = dane[i];									//	zapisu w tym wektorze - na przemian znak i odpowiadaj¹cy mu kod binarny (zawsze liczba parzysta).
+		wartosci[i] = dane[i + 1];							//	Po wykonaniu pêtli zawsze zostaje jeden element - jest nim zakodowane zdanie
 	}
 	kod = dane[-1];
 }

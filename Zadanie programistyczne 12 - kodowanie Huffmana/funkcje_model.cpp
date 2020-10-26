@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "funkcje.h"
+#include "funkcje_model.h"
 
 /**
 	* Funkcja odczytuj¹ca zawartoœæ pliku tekstowego i zapisuj¹ca j¹ w zmiennej

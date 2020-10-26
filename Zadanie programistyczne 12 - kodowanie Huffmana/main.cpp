@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "funkcje.h"
+#include "funkcje_model.h"
 
 int main(int argc, char* argv[]) {
 	std::vector<std::string> vec;

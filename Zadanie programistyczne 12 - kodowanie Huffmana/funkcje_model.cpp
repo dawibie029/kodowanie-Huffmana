@@ -48,8 +48,8 @@ bool save(const std::string& adres, const std::vector<std::string>& dane) {
 */
 void convert(const std::vector<std::string>& dane, std::vector<std::string>& znaki, std::vector<std::string>& wartosci, std::string& kod) {
 	for (std::size_t i = 0; i < dane.size() - 1; i += 2) {	//	Pêtla przepisuj¹ca wartoœci z wektora dane do dwóch wektorów w sposób wynikaj¹cy ze sposobu
-		znaki[i] = dane[i];									//	zapisu w tym wektorze - na przemian znak i odpowiadaj¹cy mu kod binarny (zawsze liczba parzysta).
-		wartosci[i] = dane[i + 1];							//	Po wykonaniu pêtli zawsze zostaje jeden element - jest nim zakodowane zdanie
+		znaki.push_back(dane[i]);							//	zapisu w tym wektorze - na przemian znak i odpowiadaj¹cy mu kod binarny (zawsze liczba parzysta).
+		wartosci.push_back(dane[i + 1]);					//	Po wykonaniu pêtli zawsze zostaje jeden element - jest nim zakodowane zdanie
 	}
-	kod = dane[-1];
+	kod = dane.back();
 }

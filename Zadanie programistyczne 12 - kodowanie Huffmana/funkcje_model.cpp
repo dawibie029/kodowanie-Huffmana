@@ -40,7 +40,7 @@ bool save(const std::string& adres, const std::vector<std::string>& dane) {
 }
 /**
 	* Funkcja konwertuj¹ca uzyskany wektor z danymi na dwie tablice - znaków i wartoœci oraz na zmienn¹ zawieraj¹c¹ s³owa kodowe
-	* Parametry .. . . . . . .. . . . .. . .
+	* Parametry przekazywane przez referencje
 	* @param dane - wektor zawieraj¹cy tablicê kodów oraz s³owa kodowe
 	* @param znaki - tablica kodów zawieraj¹ca znaki
 	* @param wartoœci - tablica wartoœci przypisanych do odpowiadaj¹cych im znaków
@@ -52,4 +52,20 @@ void convert(const std::vector<std::string>& dane, std::vector<std::string>& zna
 		wartosci.push_back(dane[i + 1]);					//	Po wykonaniu pêtli zawsze zostaje jeden element - jest nim zakodowane zdanie
 	}
 	kod = dane.back();
+}
+/**
+	* Funkcja konwertuj¹ca wektory znaki i dane oraz zakodowany tekst na jeden wektor w formacie gotowym do zapisu jako plik tekstowy
+	* Parametry przekazywane przez referencje
+	* @param dane - wektor zawieraj¹cy tablicê kodów oraz s³owa kodowe
+	* @param znaki - tablica kodów zawieraj¹ca znaki
+	* @param wartoœci - tablica wartoœci przypisanych do odpowiadaj¹cych im znaków
+	* @param kod - ci¹g s³ów kodowych
+*/
+void convert_back(std::vector<std::string>& dane, const std::vector<std::string>& znaki, const std::vector<std::string>& wartosci, const std::string& kod) {
+	dane.clear();	// dla upewnienia siê, ¿e wektor dane jest pusty.
+	for (std::size_t i = 0; i < wartosci.size(); i++) {
+		dane.push_back(znaki[i]);
+		dane.push_back(znaki[i + 1]);
+	}
+	dane.push_back(kod);
 }

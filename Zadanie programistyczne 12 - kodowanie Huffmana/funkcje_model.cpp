@@ -1,0 +1,54 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include "funkcje.h"
+
+
+//	WARTOŒÆI LICZBOWE W WEKTORZE KONWERTOWANE NA TABLICE INTÓW - LEPIEJ ZROBIÆ NA STRINGI A POTEM S£OWA KODOWE POCIACHAÆ TYMI STRINGAMI
+/**
+	* Funkcja odczytuj¹ca zawartoœæ pliku tekstowego i zapisuj¹ca j¹ w zmiennej
+	* Parametry przekazywane przez referencjê
+	* @param adres - adres pliku wejœciowego
+	* @param dane - wektor zawieraj¹cy tablicê kodów, oraz s³owa kodowe (na ostatniej pozycji)
+	* @return - zwraca wartoœæ true, je¿eli uda siê otworzyæ plik. W przeciwnym wypadku wartosc false
+*/
+bool wczytaj(const std::string& adres, std::vector<std::string>& dane) {
+	std::ifstream plikwe(adres);
+	if (!plikwe.is_open())
+		return false;
+	while (!plikwe.eof()) {		//	pêtla maj¹ca na celu podzielenie odczytanego tekstu na pojedyncze wyrazy oddzielone œrednikiem
+		std::string napis;	//	tymczasowa zmienna pomocnicza, s³u¿¹ca do zapisywania poszczegó³nych wyrazów i przeniesienia ich do wektora dane
+		getline(plikwe, napis, ';');
+		dane.push_back(napis);
+	}
+	return true;
+}
+/**
+	* Funkcja zapisuj¹ca podany tekst w pliku tekstowym o wskazanym adresie
+	* Parametry przekazywane przez referencje
+	* @param adres - adres pliku wyjœciowego
+	* @param tekst - wektor zawieraj¹cy dane, które funckja zapisze w pliku wyjœciowym
+	* @return zwraca wartoœæ true, jeœli funkcja zadzia³a prawid³owo lub wartoœæ false w razie niepowodzenia
+*/
+bool zapisz(const std::string& adres, const std::vector<std::string>& dane) {
+	std::ofstream plikwy(adres);
+	if (!plikwy.is_open())
+		return false;
+	for (std::string a : dane)	//	Pêtla maj¹ca na celu zapisanie do pliku tekstowego wartoœci wektora dane rozdzielonych œrednikami
+		plikwy << a << ';';	
+	return true;
+}
+/**
+	* Funkcja konwertuj¹ca uzyskany wektor z danymi na dwie tablice - znaków i wartoœci oraz na zmienn¹ zawieraj¹c¹ s³owa kodowe
+	* Parametry .. . . . . . .. . . . .. . .
+	* @param dane - wektor zawieraj¹cy tablicê kodów oraz s³owa kodowe
+	* @param znaki - tablica kodów zawieraj¹ca znaki
+	* @param wartoœci - tablica wartoœci przypisanych do odpowiadaj¹cych im znaków
+	* @param kod - ci¹g s³ów kodowych
+*/
+void konwertuj(const std::vector<std::string>& dane, std::string znaki[], std::string wartosci[], std::string& kod) {
+
+
+}

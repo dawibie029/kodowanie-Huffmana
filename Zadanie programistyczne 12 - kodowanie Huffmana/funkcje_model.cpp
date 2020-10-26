@@ -48,7 +48,6 @@ bool zapisz(const std::string& adres, const std::vector<std::string>& dane) {
 	* @param wartoœci - tablica wartoœci przypisanych do odpowiadaj¹cych im znaków
 	* @param kod - ci¹g s³ów kodowych
 */
-void konwertuj(const std::vector<std::string>& dane, std::string znaki[], std::string wartosci[], std::string& kod) {
-
-
+void konwertuj(const std::vector<std::string>& dane, std::vector<std::string>& znaki, std::vector<std::string>& wartosci, std::string& kod) {
+	
 }

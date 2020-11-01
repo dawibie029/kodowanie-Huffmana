@@ -21,10 +21,16 @@ int main(int argc, char* argv[]) {
 	std::vector<std::map<char, std::string>> mapa;*/
 	std::map<char, std::string> mapa;
 	std::string tekst;
-	read("C:/Users/Dawid/Desktop/test1.txt", mapa, tekst);
+	read_coded("C:/Users/Dawid/Desktop/test1.txt", mapa, tekst);
 	for (auto a : mapa) {
 		std::cout << a.first << " - " << a.second << std::endl;
 	}
 	std::cout << tekst << std::endl;
-	save("C:/Users/Dawid/Desktop/test2.txt", mapa, tekst);
+	save_coded("C:/Users/Dawid/Desktop/test2.txt", mapa, tekst);
+	if (read_uncoded("C:/Users/Dawid/Desktop/test1uncoded.txt", tekst)) {
+		std::cout << "tru\n";;
+		std::cout << tekst << std::endl;
+	}
+	else
+		std::cout << "fals\n";
 }

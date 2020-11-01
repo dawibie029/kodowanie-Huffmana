@@ -50,7 +50,7 @@ bool read_uncoded(const std::string& adres, std::string& uncoded_data) {
 	else
 		return false;		
 }
-std::map<char, int> policz_znaki(std::string& uncoded_data){
+std::map<char, int> policz_znaki(const std::string& uncoded_data){
 	std::map<char, int> ilosc_znakow;
 	for (char znak : uncoded_data) {
 		ilosc_znakow[znak]++;
@@ -80,4 +80,42 @@ bool save_coded(const std::string& adres, const std::map<char, std::string>& map
 		}
 	}
 	return true;
+}
+char znajdz_najmniejszy_char(const std::map<char, int>& ilosc_znakow, const int& wyraz_poczatkowy) {
+	int i = 0;
+	std::pair<char, int> zmienna_pomocnicza;
+	for (auto a : ilosc_znakow) {
+		if (i++ == wyraz_poczatkowy) {
+			zmienna_pomocnicza.first = a.first;
+			zmienna_pomocnicza.second = a.second;
+		}
+		else if (i > wyraz_poczatkowy) {
+			if (a.first < zmienna_pomocnicza.first) {
+				zmienna_pomocnicza.first = a.first;
+				zmienna_pomocnicza.second = a.second;
+			}
+		}
+	}
+	return zmienna_pomocnicza.first;
+}
+std::string znajdz_najmniejszy_string(const std::map<std::string, int>& suma_ilosci_znakow, const int& wyraz_poczatkowy) {
+	int i = 0;
+	std::pair<std::string, int> zmienna_pomocnicza;
+	for (auto a : suma_ilosci_znakow) {
+		if (i++ == wyraz_poczatkowy) {
+			zmienna_pomocnicza.first = a.first;
+			zmienna_pomocnicza.second = a.second;
+		}
+		else if (i > wyraz_poczatkowy) {
+			if (a.first < zmienna_pomocnicza.first) {
+				zmienna_pomocnicza.first = a.first;
+				zmienna_pomocnicza.second = a.second;
+			}
+		}
+	}
+	return zmienna_pomocnicza.first;
+}
+void zakoduj(const std::string& uncoded_data) {
+	std::map<char, int> ilosc_znakow = policz_znaki(uncoded_data);
+
 }

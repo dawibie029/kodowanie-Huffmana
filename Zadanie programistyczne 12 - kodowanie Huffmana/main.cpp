@@ -33,4 +33,7 @@ int main(int argc, char* argv[]) {
 	}
 	else
 		std::cout << "fals\n";
+	std::string str;
+	str.push_back('c');
+	str += "str";
 }

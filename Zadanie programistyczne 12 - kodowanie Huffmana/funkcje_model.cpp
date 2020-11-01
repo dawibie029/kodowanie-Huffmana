@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <map>
+#include <algorithm>
 #include "funkcje_model.h"
 
 /**
@@ -81,41 +82,35 @@ bool save_coded(const std::string& adres, const std::map<char, std::string>& map
 	}
 	return true;
 }
-char znajdz_najmniejszy_char(const std::map<char, int>& ilosc_znakow, const int& wyraz_poczatkowy) {
-	int i = 0;
-	std::pair<char, int> zmienna_pomocnicza;
-	for (auto a : ilosc_znakow) {
-		if (i++ == wyraz_poczatkowy) {
-			zmienna_pomocnicza.first = a.first;
-			zmienna_pomocnicza.second = a.second;
-		}
-		else if (i > wyraz_poczatkowy) {
-			if (a.first < zmienna_pomocnicza.first) {
-				zmienna_pomocnicza.first = a.first;
-				zmienna_pomocnicza.second = a.second;
-			}
-		}
-	}
-	return zmienna_pomocnicza.first;
-}
-std::string znajdz_najmniejszy_string(const std::map<std::string, int>& suma_ilosci_znakow, const int& wyraz_poczatkowy) {
-	int i = 0;
-	std::pair<std::string, int> zmienna_pomocnicza;
-	for (auto a : suma_ilosci_znakow) {
-		if (i++ == wyraz_poczatkowy) {
-			zmienna_pomocnicza.first = a.first;
-			zmienna_pomocnicza.second = a.second;
-		}
-		else if (i > wyraz_poczatkowy) {
-			if (a.first < zmienna_pomocnicza.first) {
-				zmienna_pomocnicza.first = a.first;
-				zmienna_pomocnicza.second = a.second;
-			}
-		}
-	}
-	return zmienna_pomocnicza.first;
+std::pair<std::string, int> znajdz_najmniejszy_string(std::vector<std::pair<std::string, int>>& ilosci_sumy_znakow, const int& numer_wyrazu_od_konca) {
+
+	sort(ilosci_sumy_znakow.begin(), ilosci_sumy_znakow.end(), [](std::pair<std::string, int> a, std::pair<std::string, int> b) {return a.second < b.second; });
+	return ilosci_sumy_znakow[ilosci_sumy_znakow.size() - 1 - numer_wyrazu_od_konca];
 }
 void zakoduj(const std::string& uncoded_data) {
-	std::map<char, int> ilosc_znakow = policz_znaki(uncoded_data);
+	std::map<char, int> ilosci_znakow_mapa = policz_znaki(uncoded_data);
+	std::vector<std::pair<char, int>> ilosci_znakow = konwertuj_na_wektor(ilosci_znakow_mapa);
+	std::vector<std::pair<std::string, int>> ilosci_sumy_znakow;
+	std::pair<std::string, int> zmienna_pomocnicza;
+	zmienna_pomocnicza.first.push_back(ilosci_znakow[0].first);	// wektor ilosci_znakow jest uporz¹dkowany, wiêc pierwsze dwa wyrazy w ka¿dym przypadku bêd¹
+	zmienna_pomocnicza.first.push_back(ilosci_znakow[1].first);	// siê ³¹czyæ w drzewie
+	zmienna_pomocnicza.second = ilosci_znakow[0].second + ilosci_znakow[1].second;
+	ilosci_sumy_znakow.push_back(zmienna_pomocnicza);
 
+	for (int i = 2; i < ilosci_znakow.size(); i++) {
+		std::pair<std::string, int> help1 = znajdz_najmniejszy_string(ilosci_sumy_znakow, 0);
+		if (ilosci_znakow[i].second <= help1.second && ilosci_znakow[i + 1].second <= help1.second) {
+			std::pair<std::string, int> zmienna_pomocnicza;
+			zmienna_pomocnicza.first.push_back(ilosci_znakow[i].first);
+			zmienna_pomocnicza.first.push_back(ilosci_znakow[i + 1].first);
+			zmienna_pomocnicza.second = ilosci_znakow[i].second + ilosci_znakow[1].second;
+			ilosci_sumy_znakow.push_back(zmienna_pomocnicza);
+		}
+	}
+}
+std::vector<std::pair<char, int>> konwertuj_na_wektor(std::map<char, int>& ilosci_znakow_mapa) {
+	std::vector<std::pair<char, int>> ilosci_znakow_wektor(ilosci_znakow_mapa.begin(), ilosci_znakow_mapa.end());
+	sort(ilosci_znakow_wektor.begin(), ilosci_znakow_wektor.end(), [](std::pair<char, int> a, std::pair<char, int> b) {return a.second < b.second; });
+	ilosci_znakow_mapa.clear();
+	return ilosci_znakow_wektor;
 }
